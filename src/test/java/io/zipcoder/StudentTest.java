@@ -1,5 +1,6 @@
 package io.zipcoder;
 
+import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import org.junit.Assert;
 import org.junit.Test;
 import sun.misc.ASCIICaseInsensitiveComparator;
@@ -13,18 +14,19 @@ public class StudentTest {
     @Test
     public void constructorTest(){
         // given
-        Student student = new Student("Alex", "Bozzini", null);
+        Double[] examScores = {100.0};
+        Student student = new Student("Alex", "Bozzini", examScores);
         String expectedFirstName = "Alex";
         String expectedLastName = "Bozzini";
-        ArrayList<Double> expectedExamScores = null;
+        Double expectedExamScore = 100.0;
         // when
         String actualFirstName = student.getFirstName();
         String actualLastName = student.getLastName();
-        ArrayList<Double> actualExamScores = student.getExamScores();
+        Double actualExamScore = examScores[0];
         // then
         Assert.assertEquals(expectedFirstName, actualFirstName);
         Assert.assertEquals(expectedLastName, actualLastName);
-        Assert.assertEquals(expectedExamScores, actualExamScores);
+        Assert.assertEquals(expectedExamScore, actualExamScore);
     }
 
     @Test
@@ -47,7 +49,8 @@ public class StudentTest {
     @Test
     public void getFirstNameTest(){
         // given
-        Student student = new Student("Alex", "Bozzini", null);
+        Double[] examScores = {};
+        Student student = new Student("Alex", "Bozzini", examScores);
         String expected = "Alex";
         // when
         String actual = student.getFirstName();
@@ -58,7 +61,8 @@ public class StudentTest {
     @Test
     public void getLastNameTest(){
         // given
-        Student student = new Student("Alex", "Bozzini", null);
+        Double[] examScores = {};
+        Student student = new Student("Alex", "Bozzini", examScores);
         String expected = "Bozzini";
         // when
         String actual = student.getLastName();
@@ -71,11 +75,7 @@ public class StudentTest {
         // given
         String firstName = "Alex";
         String lastName = "Bozzini";
-        ArrayList<Double> examScores = new ArrayList<>();
-        examScores.add(100.0);
-        examScores.add(95.0);
-        examScores.add(123.0);
-        examScores.add(96.0);
+        Double[] examScores = {100.0, 95.0, 123.0, 96.0};
         Student student = new Student(firstName, lastName, examScores);
         String expected = "Exam Scores:\n" + "\tExam 1 -> 100\n" + "\tExam 2 -> 95\n" + "\tExam 3 -> 123\n" + "\tExam 4 -> 96\n";
         // when
@@ -112,16 +112,67 @@ public class StudentTest {
     @Test
     public void getNumberOfExamsTaken(){
         // given
-        ArrayList<Double> list = new ArrayList<>();
-        list.add(87.3);
-        list.add(70.1);
-        list.add(64.7);
-        Student student = new Student("", "", list);
+        Double[] examScores = {87.3, 70.1, 64.7};
+        Student student = new Student("", "", examScores);
         Integer expected = 3;
         // when
         Integer actual = student.getNumberOfExamsTaken();
         // then
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void addExamScoreTest(){
+        // given
+        String firstName = "Alex";
+        String lastName = "Bozzini";
+        Double[] examScores = {};
+        Student student = new Student(firstName, lastName, examScores);
+        // when
+        student.addExamScore(100.0);
+        String output = student.getExamScoresAsString();
+        // then
+        System.out.println(output);
+    }
+
+    @Test
+    public void setExamScore(){
+        // given
+        String firstName = "Alex";
+        String lastName = "Bozzini";
+        Double[] examScores = {100.0, 50.0, 100.0, 50.0};
+        Student student = new Student(firstName, lastName, examScores);
+        // when
+        student.setExamScore(1, 150.0);
+        String output = student.getExamScoresAsString();
+        // then
+        System.out.println(output);
+    }
+
+    @Test
+    public void getAverageExamScoreTest(){
+        // given
+        String firstName = "Alex";
+        String lastName = "Bozzini";
+        Double[] examScores = {100.0, 150.0, 250.0, 0.0};
+        Student student = new Student(firstName, lastName, examScores);
+        // when
+        Double output = student.getAverageExamScore();
+        // then
+        System.out.println(output);
+    }
+
+    @Test
+    public void toStringTest(){
+        // given
+        String firstName = "Alex";
+        String lastName = "Bozzini";
+        Double[] examScores = {100.0, 150.0, 250.0, 0.0};
+        Student student = new Student(firstName, lastName, examScores);
+        // when
+        String output = student.toString();
+        // then
+        System.out.println(output);
     }
 
 }
