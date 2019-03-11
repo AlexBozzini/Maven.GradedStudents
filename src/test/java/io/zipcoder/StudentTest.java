@@ -5,6 +5,8 @@ import org.junit.Test;
 import sun.misc.ASCIICaseInsensitiveComparator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class StudentTest {
 
@@ -65,18 +67,22 @@ public class StudentTest {
     }
 
     @Test
-    public void getExamScoresTest(){
+    public void getExamScoresAsStringTest(){
         // given
-        ArrayList<Double> list = new ArrayList<>();
-        list.add(87.3);
-        list.add(70.1);
-        list.add(64.7);
-        Student student = new Student("Alex", "Bozzini", list);
-        ArrayList<Double> expected = list;
+        String firstName = "Alex";
+        String lastName = "Bozzini";
+        ArrayList<Double> examScores = new ArrayList<>();
+        examScores.add(100.0);
+        examScores.add(95.0);
+        examScores.add(123.0);
+        examScores.add(96.0);
+        Student student = new Student(firstName, lastName, examScores);
+        String expected = "Exam Scores:\n" + "\tExam 1 -> 100\n" + "\tExam 2 -> 95\n" + "\tExam 3 -> 123\n" + "\tExam 4 -> 96\n";
         // when
-        ArrayList<Double> actual = student.getExamScores();
+        String actual = student.getExamScoresAsString();
         // then
         Assert.assertEquals(expected, actual);
+
     }
 
     @Test

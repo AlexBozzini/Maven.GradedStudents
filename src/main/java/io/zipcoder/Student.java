@@ -31,6 +31,15 @@ public class Student {
         return examScores;
     }
 
+    public String getExamScoresAsString(){
+        Student student = new Student();
+        String output = "Exam Scores:\n";
+        for(int i= 0; i < examScores.size(); i++){
+           output += "\tExam " + (i + 1) + " -> " + Math.round(examScores.get(i)) + "\n";
+        }
+        return output;
+    }
+
     public void setFirstName(String firstName){
         this.firstName = firstName;
     }
@@ -42,5 +51,7 @@ public class Student {
     public Integer getNumberOfExamsTaken(){
         return this.getExamScores().size();
     }
+
+
 
 }
